@@ -11,9 +11,9 @@ public class Arvore {
         return raiz;
     }
 
-    public void adicionaElemento(int e, String nomeUsuario) {
-        Usuario novoUsuario = new Usuario(nomeUsuario, e);
-        No novo = new No(e, novoUsuario);
+    public void adicionaSenha(int senha, String nomeUsuario) {
+        Usuario novoUsuario = new Usuario(nomeUsuario, senha);
+        No novo = new No(senha, novoUsuario);
         if (raiz == null) {
             raiz = novo;
         } else {
@@ -21,7 +21,7 @@ public class Arvore {
             No pai;
             while (true) {
                 pai = atual;
-                if (e <= atual.getElemento()) {
+                if (senha <= atual.getSenha()) {
                     atual = atual.getEsquerda();
                     if (atual == null) {
                         pai.setEsquerda(novo);
@@ -40,7 +40,7 @@ public class Arvore {
 
     public void preOrdem(No no) {
         if (no != null) {
-            System.out.print(no.getElemento() + " ");
+            System.out.print(no.getSenha() + " ");
             preOrdem(no.getEsquerda());
             preOrdem(no.getDireita());
         }
@@ -49,7 +49,7 @@ public class Arvore {
     public void emOrdem(No no) {
         if (no != null) {
             emOrdem(no.getEsquerda());
-            System.out.print(no.getElemento() + " ");
+            System.out.print(no.getSenha() + " ");
             emOrdem(no.getDireita());
         }
     }
@@ -58,16 +58,16 @@ public class Arvore {
         if (no != null) {
             posOrdem(no.getEsquerda());
             posOrdem(no.getDireita());
-            System.out.print(no.getElemento() + " ");
+            System.out.print(no.getSenha() + " ");
         }
     }
 
-    public Usuario buscaUsuario(int e) {
+    public Usuario buscaUsuario(int senha) {
         No atual = raiz;
         while (atual != null) {
-            if (e == atual.getElemento()) {
+            if (senha == atual.getSenha()) {
                 return atual.getUsuario();
-            } else if (e < atual.getElemento()) {
+            } else if (senha < atual.getSenha()) {
                 atual = atual.getEsquerda();
             } else {
                 atual = atual.getDireita();
@@ -76,34 +76,34 @@ public class Arvore {
         return null;
     }
 
-    public void removeElemento(int e) {
-        raiz = removeNo(raiz, e);
+    public void removeSenha(int senha) {
+        raiz = removeNo(raiz, senha);
     }
 
-    private No removeNo(No no, int e) {
+    private No removeNo(No no, int senha) {
         if (no == null) {
             return null;
         }
-        if (e < no.getElemento()) {
-            no.setEsquerda(removeNo(no.getEsquerda(), e));
-        } else if (e > no.getElemento()) {
-            no.setDireita(removeNo(no.getDireita(), e));
+        if (senha < no.getSenha()) {
+            no.setEsquerda(removeNo(no.getEsquerda(), senha));
+        } else if (senha > no.getSenha()) {
+            no.setDireita(removeNo(no.getDireita(), senha));
         } else {
             if (no.getEsquerda() == null) {
                 return no.getDireita();
             } else if (no.getDireita() == null) {
                 return no.getEsquerda();
             }
-            no.setElemento(menorValor(no.getDireita()));
-            no.setDireita(removeNo(no.getDireita(), no.getElemento()));
+            no.setSenha(menorValor(no.getDireita()));
+            no.setDireita(removeNo(no.getDireita(), no.getSenha()));
         }
         return no;
     }
 
     private int menorValor(No no) {
-        int menorValor = no.getElemento();
+        int menorValor = no.getSenha();
         while (no.getEsquerda() != null) {
-            menorValor = no.getEsquerda().getElemento();
+            menorValor = no.getEsquerda().getSenha();
             no = no.getEsquerda();
         }
         return menorValor;

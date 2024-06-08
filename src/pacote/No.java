@@ -1,4 +1,3 @@
-
 package pacote;
 
 /**
@@ -6,24 +5,24 @@ package pacote;
  * @author clima
  */
 public class No {
-    private int elemento;
+
+    private int senha;
     private Usuario usuario;
     private No esquerda, direita;
 
-    public No(int e, Usuario usuario) {
-        this.elemento = e;
+    public No(int senha, Usuario usuario) {
+        this.senha = senha;
         this.usuario = usuario;
         this.esquerda = null;
         this.direita = null;
     }
 
-    // Getters e setters
-    public int getElemento() {
-        return elemento;
+    public int getSenha() {
+        return senha;
     }
 
-    public void setElemento(int elemento) {
-        this.elemento = elemento;
+    public void setSenha(int senha) {
+        this.senha = senha;
     }
 
     public Usuario getUsuario() {

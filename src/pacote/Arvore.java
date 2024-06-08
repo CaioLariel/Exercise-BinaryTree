@@ -7,145 +7,105 @@ public class Arvore {
         raiz = null;
     }
 
-    /*
-     * public String emOrdem(No n) { //ORDENA A ARVORE if (n != null) { return
-     * emOrdem(n.esquerda) + " " + n.elemento + " " + emOrdem(n.direita); } return
-     * ""; }
-     */
-
-    public boolean existeElemento(int e) {
-        No aux1 = raiz, aux2 = raiz;
-        while (aux1 != null && e != aux2.elemento) {
-            aux2 = aux1;
-            if (e < aux1.elemento) {
-                aux1 = aux1.esquerda;
-            } else if (e > aux1.elemento) {
-                aux1 = aux1.direita;
-            }
-        }
-        return e == aux2.elemento;
+    public No getRaiz() {
+        return raiz;
     }
 
-    public void adicionaElemento(int e) {
-        No novo = new No(e);
+    public void adicionaElemento(int e, String nomeUsuario) {
+        Usuario novoUsuario = new Usuario(nomeUsuario, e);
+        No novo = new No(e, novoUsuario);
         if (raiz == null) {
             raiz = novo;
         } else {
-            No aux1 = raiz, aux2 = raiz;
-            while (aux1 != null && !existeElemento(e)) {
-                aux2 = aux1;
-                if (e < aux1.elemento) {
-                    aux1 = aux1.esquerda;
-                } else if (e > aux1.elemento) {
-                    aux1 = aux1.direita;
+            No atual = raiz;
+            No pai;
+            while (true) {
+                pai = atual;
+                if (e <= atual.getElemento()) {
+                    atual = atual.getEsquerda();
+                    if (atual == null) {
+                        pai.setEsquerda(novo);
+                        return;
+                    }
+                } else {
+                    atual = atual.getDireita();
+                    if (atual == null) {
+                        pai.setDireita(novo);
+                        return;
+                    }
                 }
-            }
-            if (existeElemento(e)) {
-                System.out.println("Elemento já existe");
-            } else {
-                if (e < aux2.elemento) {
-                    aux2.esquerda = novo;
-                } else if (e > aux2.elemento) {
-                    aux2.direita = novo;
-                }
-                System.out.println("Elemento Incluído");
             }
         }
     }
+
+    public void preOrdem(No no) {
+        if (no != null) {
+            System.out.print(no.getElemento() + " ");
+            preOrdem(no.getEsquerda());
+            preOrdem(no.getDireita());
+        }
+    }
+
+    public void emOrdem(No no) {
+        if (no != null) {
+            emOrdem(no.getEsquerda());
+            System.out.print(no.getElemento() + " ");
+            emOrdem(no.getDireita());
+        }
+    }
+
+    public void posOrdem(No no) {
+        if (no != null) {
+            posOrdem(no.getEsquerda());
+            posOrdem(no.getDireita());
+            System.out.print(no.getElemento() + " ");
+        }
+    }
+
+    public Usuario buscaUsuario(int e) {
+        No atual = raiz;
+        while (atual != null) {
+            if (e == atual.getElemento()) {
+                return atual.getUsuario();
+            } else if (e < atual.getElemento()) {
+                atual = atual.getEsquerda();
+            } else {
+                atual = atual.getDireita();
+            }
+        }
+        return null;
+    }
+
     public void removeElemento(int e) {
-    No aux1 = raiz, aux2 = null;
-    while (aux1 != null && aux1.elemento != e) {
-        aux2 = aux1;
-        if (e < aux1.elemento) {
-            aux1 = aux1.esquerda;
-        } else {
-            aux1 = aux1.direita;
-        }
+        raiz = removeNo(raiz, e);
     }
-    if (aux1 == null) {
-        System.out.println("Elemento não encontrado");
-    } else if (aux1.esquerda == null && aux1.direita == null) {
-        if (aux2 == null) {
-            raiz = null;
-        } else if (aux2.esquerda == aux1) {
-            aux2.esquerda = null;
-        } else {
-            aux2.direita = null;
-        }
-        System.out.println("Elemento " + e + " removido com sucesso!");
-    } else if (aux1.esquerda == null) {
-        if (aux2 == null) {
-            raiz = aux1.direita;
-        } else if (aux2.esquerda == aux1) {
-            aux2.esquerda = aux1.direita;
-        } else {
-            aux2.direita = aux1.direita;
-        }
-        System.out.println("Elemento " + e + " removido com sucesso!");
-    } else if (aux1.direita == null) {
-        if (aux2 == null) {
-            raiz = aux1.esquerda;
-        } else if (aux2.esquerda == aux1) {
-            aux2.esquerda = aux1.esquerda;
-        } else {
-            aux2.direita = aux1.esquerda;
-        }
-        System.out.println("Elemento " + e + " removido com sucesso!");
-    } else {
-        No aux3 = aux1.direita;
-        aux2 = aux1;
-        while (aux3.esquerda != null) {
-            aux2 = aux3;
-            aux3 = aux3.esquerda;
-        }
-        aux1.elemento = aux3.elemento;
-        if (aux2 == aux1) {
-            aux2.direita = aux3.direita;
-        } else {
-            aux2.esquerda = aux3.direita;
-        }
-        System.out.println("Elemento " + e + " removido com sucesso!");
-    }
-}
 
-    public void verifica(int e) {
-        No aux = raiz;
-        while (aux != null) {
-            if (e < aux.elemento) {
-                aux = aux.esquerda;
-            } else if (e > aux.elemento) {
-                aux = aux.direita;
-            } else {
-                System.out.println("Elemento Repetido");
+    private No removeNo(No no, int e) {
+        if (no == null) {
+            return null;
+        }
+        if (e < no.getElemento()) {
+            no.setEsquerda(removeNo(no.getEsquerda(), e));
+        } else if (e > no.getElemento()) {
+            no.setDireita(removeNo(no.getDireita(), e));
+        } else {
+            if (no.getEsquerda() == null) {
+                return no.getDireita();
+            } else if (no.getDireita() == null) {
+                return no.getEsquerda();
             }
+            no.setElemento(menorValor(no.getDireita()));
+            no.setDireita(removeNo(no.getDireita(), no.getElemento()));
         }
+        return no;
     }
 
-    public void preOrdem(No n) {
-        if (n != null) {
-            System.out.println("Elemento " + n.elemento);
-            preOrdem(n.esquerda);
-            preOrdem(n.direita);
+    private int menorValor(No no) {
+        int menorValor = no.getElemento();
+        while (no.getEsquerda() != null) {
+            menorValor = no.getEsquerda().getElemento();
+            no = no.getEsquerda();
         }
-    }
-
-    public void emOrdem(No n) {
-        if (n != null) {
-            emOrdem(n.direita);
-            System.out.println("Elemento " + n.elemento);
-            emOrdem(n.esquerda);
-        }
-    }
-
-    public void posOrdem(No n) {
-        if (n != null) {
-            posOrdem(n.esquerda);
-            posOrdem(n.direita);
-            System.out.println("Elemento " + n.elemento);
-        }
-    }
-
-    public No getRaiz() {
-        return raiz;
+        return menorValor;
     }
 }

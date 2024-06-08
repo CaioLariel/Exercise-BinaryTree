@@ -11,30 +11,39 @@ public class Arvore {
         return raiz;
     }
 
-    public void adicionaSenha(String senha, String nomeUsuario) {
+    public boolean adicionaSenha(String senha, String nomeUsuario) {
         Usuario novoUsuario = new Usuario(nomeUsuario, senha);
         No novo = new No(senha, novoUsuario);
+
         if (raiz == null) {
             raiz = novo;
+            return true;
         } else {
             No atual = raiz;
             No pai;
+            boolean senhaExistente = false;
+
             while (true) {
                 pai = atual;
-                if (senha.compareTo(atual.getSenha()) <= 0) {
+                if (senha.compareTo(atual.getSenha()) == 0) {
+                    senhaExistente = true;
+                    break;
+                } else if (senha.compareTo(atual.getSenha()) <= 0) {
                     atual = atual.getEsquerda();
                     if (atual == null) {
                         pai.setEsquerda(novo);
-                        return;
+                        return true;
                     }
                 } else {
                     atual = atual.getDireita();
                     if (atual == null) {
                         pai.setDireita(novo);
-                        return;
+                        return true;
                     }
                 }
             }
+
+            return !senhaExistente;
         }
     }
 
@@ -76,14 +85,16 @@ public class Arvore {
         return null;
     }
 
-    public void removeSenha(String senha) {
-        raiz = removeNo(raiz, senha);
+     public boolean removeSenha(String senha) {
+        No noRemovido = removeNo(raiz, senha);
+        return noRemovido != null;
     }
 
     private No removeNo(No no, String senha) {
         if (no == null) {
             return null;
         }
+
         if (senha.compareTo(no.getSenha()) < 0) {
             no.setEsquerda(removeNo(no.getEsquerda(), senha));
         } else if (senha.compareTo(no.getSenha()) > 0) {
@@ -94,9 +105,11 @@ public class Arvore {
             } else if (no.getDireita() == null) {
                 return no.getEsquerda();
             }
+
             no.setSenha(menorValor(no.getDireita()));
             no.setDireita(removeNo(no.getDireita(), no.getSenha()));
         }
+
         return no;
     }
 

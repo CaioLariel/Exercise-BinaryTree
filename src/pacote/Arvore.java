@@ -11,7 +11,7 @@ public class Arvore {
         return raiz;
     }
 
-    public boolean adicionaSenha(String senha, String nomeUsuario) {
+    public boolean insereLogin(String senha, String nomeUsuario) {
         Usuario novoUsuario = new Usuario(nomeUsuario, senha);
         No novo = new No(senha, novoUsuario);
 
@@ -71,7 +71,7 @@ public class Arvore {
         }
     }
 
-    public Usuario buscaUsuario(String senha) {
+    public Usuario validaLogin(String senha) {
         No atual = raiz;
         while (atual != null) {
             if (senha.equals(atual.getSenha())) {
@@ -85,7 +85,7 @@ public class Arvore {
         return null;
     }
 
-     public boolean removeSenha(String senha) {
+     public boolean removeLogin(String senha) {
         No noRemovido = removeNo(raiz, senha);
         return noRemovido != null;
     }

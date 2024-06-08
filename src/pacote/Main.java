@@ -16,7 +16,7 @@ public class Main {
                 case 1:
                     senha = JOptionPane.showInputDialog("Digite uma Senha: ");
                     nomeUsuario = JOptionPane.showInputDialog("Digite o nome do usuário: ");
-                    boolean inserido = ab.adicionaSenha(senha, nomeUsuario);
+                    boolean inserido = ab.insereLogin(senha, nomeUsuario);
                     if (inserido) {
                         JOptionPane.showMessageDialog(null, "Senha '" + senha + "' inserida com sucesso!");
                     } else {
@@ -37,7 +37,7 @@ public class Main {
                     break;
                 case 5:
                     senha = JOptionPane.showInputDialog("Digite a senha a ser buscada: ");
-                    Usuario usuario = ab.buscaUsuario(senha);
+                    Usuario usuario = ab.validaLogin(senha);
                     if (usuario != null) {
                         JOptionPane.showMessageDialog(null, "A senha " + senha + " existe na árvore e está associada ao usuário: " + usuario.getNome());
                     } else {
@@ -46,7 +46,7 @@ public class Main {
                     break;
                 case 6:
                     senha = JOptionPane.showInputDialog("Digite a senha a ser removida: ");
-                    boolean removido = ab.removeSenha(senha);
+                    boolean removido = ab.removeLogin(senha);
                     if (removido) {
                         JOptionPane.showMessageDialog(null, "Senha '" + senha + "' removida com sucesso!");
                     } else {

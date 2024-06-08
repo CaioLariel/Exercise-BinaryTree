@@ -5,16 +5,16 @@ public class Main {
     public static void main(String[] args) {
         Arvore ab = new Arvore();
         String menu = "Menu de Opções criando arvore binaria\n1 - Adicionar um cadastro\n2 - Ver senhas pre ordem\n3 - Ver senhas pos ordem\n4 - Ver senhas em ordem\n5 - Buscar cadastro por senha\n6 - Remover cadastro por senha\n99 - Sair";
-        int op = 0, num;
-        String nomeUsuario;
+        int op = 0;
+        String senha, nomeUsuario;
 
         while (op != 99) {
             op = Integer.parseInt(JOptionPane.showInputDialog(menu));
             switch (op) {
                 case 1:
-                    num = Integer.parseInt(JOptionPane.showInputDialog("Digite uma Senha: "));
+                    senha = JOptionPane.showInputDialog("Digite uma Senha: ");
                     nomeUsuario = JOptionPane.showInputDialog("Digite o nome do usuário: ");
-                    ab.adicionaSenha(num, nomeUsuario);
+                    ab.adicionaSenha(senha, nomeUsuario);
                     break;
                 case 2:
                     System.out.println("Pre Ordem");
@@ -29,17 +29,17 @@ public class Main {
                     ab.emOrdem(ab.getRaiz());
                     break;
                 case 5:
-                    num = Integer.parseInt(JOptionPane.showInputDialog("Digite a senha a ser buscada: "));
-                    Usuario usuario = ab.buscaUsuario(num);
+                    senha = JOptionPane.showInputDialog("Digite a senha a ser buscada: ");
+                    Usuario usuario = ab.buscaUsuario(senha);
                     if (usuario != null) {
-                        JOptionPane.showMessageDialog(null, "A senha " + num + " existe na árvore e está associada ao usuário: " + usuario.getNome());
+                        JOptionPane.showMessageDialog(null, "A senha " + senha + " existe na árvore e está associada ao usuário: " + usuario.getNome());
                     } else {
-                        JOptionPane.showMessageDialog(null, "A senha " + num + " não existe na árvore!");
+                        JOptionPane.showMessageDialog(null, "A senha " + senha + " não existe na árvore!");
                     }
                     break;
                 case 6:
-                    num = Integer.parseInt(JOptionPane.showInputDialog("Digite a senha a ser removida: "));
-                    ab.removeSenha(num);
+                    senha = JOptionPane.showInputDialog("Digite a senha a ser removida: ");
+                    ab.removeSenha(senha);
                     break;
             }
         }

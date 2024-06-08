@@ -5,23 +5,22 @@ package pacote;
  * @author clima
  */
 public class No {
-
-    private int senha;
+    private String senha;
     private Usuario usuario;
     private No esquerda, direita;
 
-    public No(int senha, Usuario usuario) {
+    public No(String senha, Usuario usuario) {
         this.senha = senha;
         this.usuario = usuario;
         this.esquerda = null;
         this.direita = null;
     }
 
-    public int getSenha() {
+    public String getSenha() {
         return senha;
     }
 
-    public void setSenha(int senha) {
+    public void setSenha(String senha) {
         this.senha = senha;
     }
 

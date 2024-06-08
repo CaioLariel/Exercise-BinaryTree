@@ -11,7 +11,7 @@ public class Arvore {
         return raiz;
     }
 
-    public void adicionaSenha(int senha, String nomeUsuario) {
+    public void adicionaSenha(String senha, String nomeUsuario) {
         Usuario novoUsuario = new Usuario(nomeUsuario, senha);
         No novo = new No(senha, novoUsuario);
         if (raiz == null) {
@@ -21,7 +21,7 @@ public class Arvore {
             No pai;
             while (true) {
                 pai = atual;
-                if (senha <= atual.getSenha()) {
+                if (senha.compareTo(atual.getSenha()) <= 0) {
                     atual = atual.getEsquerda();
                     if (atual == null) {
                         pai.setEsquerda(novo);
@@ -62,12 +62,12 @@ public class Arvore {
         }
     }
 
-    public Usuario buscaUsuario(int senha) {
+    public Usuario buscaUsuario(String senha) {
         No atual = raiz;
         while (atual != null) {
-            if (senha == atual.getSenha()) {
+            if (senha.equals(atual.getSenha())) {
                 return atual.getUsuario();
-            } else if (senha < atual.getSenha()) {
+            } else if (senha.compareTo(atual.getSenha()) < 0) {
                 atual = atual.getEsquerda();
             } else {
                 atual = atual.getDireita();
@@ -76,17 +76,17 @@ public class Arvore {
         return null;
     }
 
-    public void removeSenha(int senha) {
+    public void removeSenha(String senha) {
         raiz = removeNo(raiz, senha);
     }
 
-    private No removeNo(No no, int senha) {
+    private No removeNo(No no, String senha) {
         if (no == null) {
             return null;
         }
-        if (senha < no.getSenha()) {
+        if (senha.compareTo(no.getSenha()) < 0) {
             no.setEsquerda(removeNo(no.getEsquerda(), senha));
-        } else if (senha > no.getSenha()) {
+        } else if (senha.compareTo(no.getSenha()) > 0) {
             no.setDireita(removeNo(no.getDireita(), senha));
         } else {
             if (no.getEsquerda() == null) {
@@ -100,8 +100,8 @@ public class Arvore {
         return no;
     }
 
-    private int menorValor(No no) {
-        int menorValor = no.getSenha();
+    private String menorValor(No no) {
+        String menorValor = no.getSenha();
         while (no.getEsquerda() != null) {
             menorValor = no.getEsquerda().getSenha();
             no = no.getEsquerda();

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package pacote;
 
 /**
@@ -10,9 +6,9 @@ package pacote;
  */
 public class Usuario {
     private String nome;
-    private int senha;
+    private String senha;
 
-    public Usuario(String nome, int senha) {
+    public Usuario(String nome, String senha) {
         this.nome = nome;
         this.senha = senha;
     }
@@ -25,11 +21,11 @@ public class Usuario {
         this.nome = nome;
     }
 
-    public int getSenha() {
+    public String getSenha() {
         return senha;
     }
 
-    public void setSenha(int senha) {
+    public void setSenha(String senha) {
         this.senha = senha;
     }
 }
